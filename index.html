@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="index.css"/>
 </head>
 <body>
+
   <header>
     <div class="header-brand">
       <div class="brand-icon">🍴</div>
@@ -17,58 +18,69 @@
     </div>
     <button class="btn-reset">↺ Reset Favorites</button>
   </header>
+
   <div class="page">
+
     <div class="panel-left">
+
       <div class="endpoint-badge">
         <span class="badge-dot"></span>
         <span class="badge-label">API Endpoint</span>
-        <a href="#">themealdb.com/api/json/v1/1/random.php</a>
+        <a href="https://www.themealdb.com/api/json/v1/1/random.php" target="_blank">themealdb.com/api/json/v1/1/random.php</a>
       </div>
+
       <div class="action-buttons">
-        <button class="btn-generate">⚡ Get Random Meal</button>
+        <button class="btn-generate" onclick="fetchRandomMeal()">⚡ Get Random Meal</button>
         <button class="btn-save">🤍 Save Meal</button>
-        <button class="btn-secondary">📋 Instructions</button>
-        <button class="btn-secondary btn-ing">🥗 Ingredients</button>
+        <button class="btn-secondary" id="btn-instructions" onclick="togglePanel('instructions-panel', this)">📋 Instructions</button>
+        <button class="btn-secondary btn-ing" id="btn-ingredients" onclick="togglePanel('ingredients-panel', this)">🥗 Ingredients</button>
       </div>
+
       <div class="db-note">
         <span class="db-dot"></span>
         Save/Favorites actions will connect to Firebase/Database
       </div>
+
       <div id="loader" class="loader">
         <div class="spinner"></div>
         <span>Finding something delicious…</span>
       </div>
       <div id="error-box" class="error-msg">⚠️ Couldn't load a meal. Check your connection.</div>
+
       <div class="meal-card">
         <div id="data-container">
-          <div class="meal-empty-state">
+          <div class="meal-empty-state" id="meal-empty">
             <div class="empty-emoji">🧑‍🍳</div>
             <h3>Ready to discover a new meal?</h3>
             <p>Click <strong>"Get Random Meal"</strong> to fetch a recipe from TheMealDB API</p>
           </div>
-          <div id="meal-name-container" style="display:none">
-            <h2 id="meal-name">Meal name goes here</h2>
-            <div class="meal-tags">
-              <span class="tag t-orange" id="meal-category">Category</span>
-              <span class="tag t-teal" id="meal-area-tag">Area</span>
+          <div id="meal-content" style="display:none">
+            <div class="meal-top">
+              <div class="meal-title-area">
+                <h2 id="meal-name"></h2>
+                <div class="meal-tags">
+                  <span class="tag t-orange" id="meal-category"></span>
+                  <span class="tag t-teal" id="meal-area-tag"></span>
+                </div>
+              </div>
+              <a id="meal-yt" href="#" target="_blank" class="yt-pill" style="display:none">▶ Watch</a>
             </div>
-          </div>
-          <div id="ingredients-panel" class="expandable-panel" style="display:none">
-            <div class="panel-heading">🥗 Ingredients</div>
-            <ul id="ingredient-list" class="ing-grid">
-              <li>Ingredient 1</li>
-              <li>Ingredient 2</li>
-              <li>Ingredient 3</li>
-            </ul>
-          </div>
-          <div id="instructions-panel" class="expandable-panel" style="display:none">
-            <div class="panel-heading">📋 Instructions</div>
-            <p id="meal-instructions" class="instructions-body">Step by step instructions will appear here.</p>
+            <div id="ingredients-panel" class="expandable-panel" style="display:none">
+              <div class="panel-heading">🥗 Ingredients</div>
+              <ul id="ingredient-list" class="ing-grid"></ul>
+            </div>
+            <div id="instructions-panel" class="expandable-panel" style="display:none">
+              <div class="panel-heading">📋 Instructions</div>
+              <p id="meal-instructions" class="instructions-body"></p>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
+
     <div class="panel-right">
+
       <div class="sidebar-block">
         <div class="sidebar-block-header">
           <span>💗 Saved Favorites</span>
@@ -81,15 +93,14 @@
             <span class="chip-sub">Collection: 'favorites' | Fields: meal data</span>
           </div>
         </div>
-        <div id="fav-container">
-          <div class="fav-empty-state">
-            <div class="fav-empty-icon">🤍</div>
-            <p>No favorites yet</p>
-            <small>Save meals to see them here</small>
-          </div>
-          <div id="fav-list" class="fav-list"></div>
+        <div id="fav-empty" class="fav-empty-state">
+          <div class="fav-empty-icon">🤍</div>
+          <p>No favorites yet</p>
+          <small>Save meals to see them here</small>
         </div>
+        <div id="fav-list" class="fav-list"></div>
       </div>
+
       <div class="sidebar-block">
         <div class="sidebar-block-header">📸 Current Meal Picture</div>
         <p class="pic-desc">Food image from API will appear here</p>
@@ -98,14 +109,18 @@
           API Data: <code>strMealThumb</code> will display here
         </div>
         <div class="pic-frame">
-          <div id="pic-container" class="pic-empty-state">
+          <div id="pic-empty" class="pic-empty-state">
             <div class="pic-empty-icon">🍽️</div>
             <p>No meal loaded yet</p>
             <small>Click "Get Random Meal" to see food image</small>
           </div>
+          <img id="meal-pic" src="" alt="" style="display:none"/>
         </div>
       </div>
+
     </div>
   </div>
+
+  <script src="index.js"></script>
 </body>
 </html>
