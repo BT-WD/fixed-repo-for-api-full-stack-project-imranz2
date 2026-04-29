@@ -16,7 +16,7 @@
         <div class="brand-sub">Discover new recipes instantly · Perfect for students &amp; busy cooks</div>
       </div>
     </div>
-    <button class="btn-reset">↺ Reset Favorites</button>
+    <button class="btn-reset" onclick="resetFavorites()">↺ Reset Favorites</button>
   </header>
 
   <div class="page">
@@ -31,14 +31,14 @@
 
       <div class="action-buttons">
         <button class="btn-generate" onclick="fetchRandomMeal()">⚡ Get Random Meal</button>
-        <button class="btn-save">🤍 Save Meal</button>
+        <button class="btn-save" id="save-btn" onclick="toggleFavorite()">🤍 Save Meal</button>
         <button class="btn-secondary" id="btn-instructions" onclick="togglePanel('instructions-panel', this)">📋 Instructions</button>
         <button class="btn-secondary btn-ing" id="btn-ingredients" onclick="togglePanel('ingredients-panel', this)">🥗 Ingredients</button>
       </div>
 
       <div class="db-note">
         <span class="db-dot"></span>
-        Save/Favorites actions will connect to Firebase/Database
+        Save/Favorites actions connect to localStorage
       </div>
 
       <div id="loader" class="loader">
@@ -85,13 +85,6 @@
         <div class="sidebar-block-header">
           <span>💗 Saved Favorites</span>
           <span class="count-pill" id="fav-count">0</span>
-        </div>
-        <div class="firebase-chip">
-          <span class="chip-dot"></span>
-          <div>
-            <strong>FIREBASE DATA:</strong> Favorites stored in database<br>
-            <span class="chip-sub">Collection: 'favorites' | Fields: meal data</span>
-          </div>
         </div>
         <div id="fav-empty" class="fav-empty-state">
           <div class="fav-empty-icon">🤍</div>
