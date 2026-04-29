@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Random Meal Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css"/>
 </head>
 <body>
@@ -29,6 +30,25 @@
         <a href="https://www.themealdb.com/api/json/v1/1/random.php" target="_blank">themealdb.com/api/json/v1/1/random.php</a>
       </div>
 
+      <!-- SEARCH BAR — new feature -->
+      <div class="search-row">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Search for a meal by name…"
+            onkeydown="handleSearchKey(event)"
+          />
+          <button class="search-clear" id="search-clear" onclick="clearSearch()" style="display:none">✕</button>
+        </div>
+        <button class="btn-search" onclick="searchMeal()">Search</button>
+      </div>
+
+      <!-- Search results dropdown -->
+      <div id="search-results" class="search-results" style="display:none"></div>
+
       <div class="action-buttons">
         <button class="btn-generate" onclick="fetchRandomMeal()">⚡ Get Random Meal</button>
         <button class="btn-save" id="save-btn" onclick="toggleFavorite()">🤍 Save Meal</button>
@@ -52,7 +72,7 @@
           <div class="meal-empty-state" id="meal-empty">
             <div class="empty-emoji">🧑‍🍳</div>
             <h3>Ready to discover a new meal?</h3>
-            <p>Click <strong>"Get Random Meal"</strong> to fetch a recipe from TheMealDB API</p>
+            <p>Click <strong>"Get Random Meal"</strong> or search above to get started</p>
           </div>
           <div id="meal-content" style="display:none">
             <div class="meal-top">
@@ -85,6 +105,13 @@
         <div class="sidebar-block-header">
           <span>💗 Saved Favorites</span>
           <span class="count-pill" id="fav-count">0</span>
+        </div>
+        <div class="firebase-chip">
+          <span class="chip-dot"></span>
+          <div>
+            <strong>FIREBASE DATA:</strong> Favorites stored in database<br>
+            <span class="chip-sub">Collection: 'favorites' | Fields: meal data</span>
+          </div>
         </div>
         <div id="fav-empty" class="fav-empty-state">
           <div class="fav-empty-icon">🤍</div>
